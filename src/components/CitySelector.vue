@@ -3,9 +3,11 @@
     <input 
       v-model="city"
       class="city-selector--input"
+      @focus="isFocused = true"
+      @blur="isFocused = false"
       @change="getListOfCities"
     />
-    <template v-if="isListOpened">
+    <template v-if="isListOpened && isFocused">
       <div class="city-selector--list city-list">
         <div
           v-for="c in cities"
@@ -26,8 +28,14 @@
 
   const emit = defineEmits(['select-city'])
 
-  const city = ref('Saint Petersburg') // id: 498817
+  const initialCity = ref({
+    id: 498817,
+    name: 'Saint Petersburg',
+    country: 'RU'
+  })
+  const city = ref('Saint Petersburg') 
   const cities = ref([])
+  const isFocused = ref(false)
   const isListOpened = computed(() => cities.value.length) 
 
   const getListOfCities = async () => {
