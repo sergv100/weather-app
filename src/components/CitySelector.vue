@@ -57,14 +57,17 @@
     width: 100%;
     max-width: 360px;
     position: relative;
-    &--input {
+    & > * {
       cursor: pointer;
-      width: 100%;
-      padding: 10px;
       box-sizing: border-box;
-      border: none;
       border-radius: 4px;
       color: #fff;
+      text-align: center;
+    }
+    &--input {
+      width: 100%;
+      padding: 10px;
+      border: none;
       background-color: transparent;
       outline: none;
       &:focus {
@@ -78,8 +81,6 @@
       left: 0;
       top: 100%;
       border: 2px solid #b276e9;
-      border-radius: 4px;
-      box-sizing: border-box;
     }
   }
   .city-list {
@@ -91,6 +92,7 @@
       line-height: 20px;
       &:hover {
         background-color: aquamarine;
+        color: blueviolet;
       }
     }
   }
