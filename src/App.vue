@@ -22,7 +22,7 @@
   import { ref, watch } from 'vue'
   import { WeatherUnits } from '@/utils/constants'
 
-  const unit = ref(WeatherUnits.IMPERIAL)
+  const unit = ref(WeatherUnits.METRIC)
   const cityId = ref(null)
   const weatherData = ref(null)
 
