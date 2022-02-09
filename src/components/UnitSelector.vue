@@ -24,6 +24,7 @@
   import { WeatherUnits } from '@/utils/constants'
 
   const emit = defineEmits(['select-unit'])
+  
   const props = defineProps({
     selectedUnit: {
       type: String,
@@ -46,6 +47,7 @@
   .unit-selector {
     border: 5px;
     overflow: hidden;
+    padding-top: 20px;
   }
   .unit {
     border: none;
