@@ -27,7 +27,13 @@
   const props = defineProps({
     selectedUnit: {
       type: String,
-      required: true
+      required: true,
+      validator(val) {
+        return [
+          WeatherUnits.METRIC,
+          WeatherUnits.IMPERIAL
+        ].includes(val)
+      }
     }
   })
 
