@@ -1,11 +1,8 @@
 import listCities from './city.list.json'
-// TODO: move const to env
-const API_URL = 'api.openweathermap.org/data/2.5/weather'
-const API_KEY = ''
 
 export async function getWeatherByCityId (cityId) {
   try {    
-    const response = await fetch(`${API_URL}?id=${cityId}&appid=${API_KEY}`)
+    const response = await fetch(`${import.meta.env.VITE_WEATHER_API_URL}?id=${cityId}&appid=${import.meta.env.VITE_WEATHER_CLIENT_ID}`)
     return await response.json()
   } catch (error) {
     throw new Error('Can\'t get data from the api', error)

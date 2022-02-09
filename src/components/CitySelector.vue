@@ -1,13 +1,13 @@
 <template>
+<!-- TODO: hide city list after click outside -->
   <div class="city-selector">
     <input 
       v-model="city"
       class="city-selector--input"
-      @focus="isFocused = true"
-      @blur="isFocused = false"
+      @focus="getListOfCities"
       @change="getListOfCities"
     />
-    <template v-if="isListOpened && isFocused">
+    <template v-if="isListOpened">
       <div class="city-selector--list city-list">
         <div
           v-for="c in cities"
@@ -24,7 +24,7 @@
 
 <script setup>
   import { ref, computed } from 'vue'
-  import { getCities } from '@/api/api'
+  import { getCities } from '@/api'
 
   const emit = defineEmits(['select-city'])
 
@@ -36,7 +36,7 @@
   const city = ref('Saint Petersburg') 
   const cities = ref([])
   const isFocused = ref(false)
-  const isListOpened = computed(() => cities.value.length) 
+  const isListOpened = computed(() => Boolean(cities.value.length)) 
 
   const getListOfCities = async () => {
     if (!city.value) {
@@ -58,6 +58,7 @@
 
     emit('select-city', selected.id)
   }
+  
 </script>
 
 <style lang="scss" scoped>
