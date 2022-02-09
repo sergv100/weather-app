@@ -45,8 +45,6 @@
 
 <style lang="scss" scoped>
   .unit-selector {
-    border: 5px;
-    overflow: hidden;
     padding-top: 20px;
   }
   .unit {

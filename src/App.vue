@@ -1,15 +1,17 @@
 <template>
-  <city-selector 
-    @select-city="updateCity"
-  />
-  <unit-selector
-    :selected-unit="unit"
-    @select-unit="updateUnit"
-  />
-  <weather-widget
-    :unit="unit"
-    :weather="weatherData"
-  />
+  <div class="container">
+    <city-selector 
+      @select-city="updateCity"
+    />
+    <unit-selector
+      :selected-unit="unit"
+      @select-unit="updateUnit"
+    />
+    <weather-widget
+      :unit="unit"
+      :weather="weatherData"
+    />
+  </div>
 </template>
 
 <script setup>

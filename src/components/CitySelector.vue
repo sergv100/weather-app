@@ -74,11 +74,18 @@
       width: 100%;
       padding: 10px;
       border: none;
+      font-size: 3rem;
       background-color: transparent;
       outline: none;
+
       &:focus {
         background-color: #b276e9;
         cursor: text;
+      }
+
+      &::placeholder {
+        color: #fff;
+        font-size: 20px;
       }
     }
 
