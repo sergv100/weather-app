@@ -4,7 +4,7 @@
     <input 
       v-model="city"
       class="city-selector--input"
-      @focus="getListOfCities"
+      placeholder="Start typing for search..."
       @change="getListOfCities"
     />
     <template v-if="isListOpened">
@@ -28,14 +28,9 @@
 
   const emit = defineEmits(['select-city'])
 
-  const initialCity = ref({
-    id: 498817,
-    name: 'Saint Petersburg',
-    country: 'RU'
-  })
-  const city = ref('Saint Petersburg') 
+  const city = ref('') 
   const cities = ref([])
-  const isFocused = ref(false)
+  // const isFocused = ref(false)
   const isListOpened = computed(() => Boolean(cities.value.length)) 
 
   const getListOfCities = async () => {
@@ -66,6 +61,7 @@
     width: 100%;
     max-width: 360px;
     position: relative;
+
     & > * {
       cursor: pointer;
       box-sizing: border-box;
@@ -73,6 +69,7 @@
       color: #fff;
       text-align: center;
     }
+
     &--input {
       width: 100%;
       padding: 10px;
@@ -84,6 +81,7 @@
         cursor: text;
       }
     }
+
     &--list {
       width: 100%;
       position: absolute;
@@ -92,13 +90,17 @@
       border: 2px solid #b276e9;
     }
   }
+
   .city-list {
     padding: 0px;
     max-height: 300px;
     overflow: scroll;
+    background-color: blueviolet;
+
     &--item {
       padding: 5px;
       line-height: 20px;
+      
       &:hover {
         background-color: aquamarine;
         color: blueviolet;
