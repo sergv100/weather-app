@@ -31,7 +31,7 @@
   const city = ref('') 
   const cities = ref([])
   // const isFocused = ref(false)
-  const isListOpened = computed(() => Boolean(cities.value.length)) 
+  const isListOpened = computed(() => Boolean(cities.value.length))
 
   const getListOfCities = async () => {
     if (!city.value) {

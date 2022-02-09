@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!weather">
+  <div v-if="!weather" class="weather-widget weather-widget_empty">
     No one city is selected
   </div>
   <div 
@@ -83,6 +83,10 @@
     color: #fff;
     padding-top: 40px;
     width: 100%;
+
+    &_empty {
+      text-align: center;
+    }
     
     &--temp {
       font-size: 4rem;
