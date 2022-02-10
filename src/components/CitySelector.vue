@@ -8,6 +8,13 @@
       placeholder="Start typing for search..."
       @change="getListOfCities"
     />
+    <button
+      v-if="cityName.length"
+      class="city-selector--button"
+      @click="getListOfCities"
+    >
+      Find
+    </button>  
     <template v-if="isListOpened">
       <div class="city-selector--list city-list">
         <div
@@ -80,7 +87,7 @@
       padding: 10px;
       border: none;
       font-size: 3rem;
-      background-color: transparent;
+      background-color: #9934f7;
       outline: none;
 
       &:focus {
@@ -91,7 +98,21 @@
       &::placeholder {
         color: #fff;
         font-size: 20px;
+        line-height: 3rem;
       }
+    }
+
+    &--button {
+      position: absolute;
+      top: 0;
+      left: 100%;
+      margin: 10px 0 10px 10px;
+      border: none;
+      border-radius: 50%;
+      line-height: 3rem;
+      width: 3rem;
+      background-color: aquamarine;
+      color: blueviolet;
     }
 
     &--list {
