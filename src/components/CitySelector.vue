@@ -1,8 +1,9 @@
 <template>
 <!-- TODO: hide city list after click outside -->
   <div class="city-selector">
+    <!-- TODO: add debounce -->
     <input 
-      v-model="city"
+      v-model="cityName"
       class="city-selector--input"
       placeholder="Start typing for search..."
       @change="getListOfCities"
@@ -23,22 +24,25 @@
 </template>
 
 <script setup>
-  import { ref, computed } from 'vue'
+  import { ref, computed, watch } from 'vue'
   import { getCities } from '@/api'
 
   const emit = defineEmits(['select-city'])
 
-  const city = ref('') 
+  const cityName = ref('')
+  const city = ref(null) 
   const cities = ref([])
-  // const isFocused = ref(false)
+
   const isListOpened = computed(() => Boolean(cities.value.length))
 
   const getListOfCities = async () => {
-    if (!city.value) {
-      cities.value = [];
+    if (!cityName.value) {
+      cityName.value = city.value.name
+      cities.value = []
+      return
     }
 
-    const rawCities = await getCities(city.value)
+    const rawCities = await getCities(cityName.value)
 
     cities.value = rawCities.map(c => ({
       id: c.id,
@@ -48,7 +52,8 @@
   }
 
   const selectCity = (selected) => {
-    city.value = selected.name
+    city.value = selected
+    cityName.value = selected.name
     cities.value = []
 
     emit('select-city', selected.id)
