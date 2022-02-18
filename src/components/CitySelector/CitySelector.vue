@@ -4,22 +4,22 @@
     <!-- TODO: add debounce -->
     <input 
       v-model="cityName"
-      class="city-selector--input"
+      class="city-selector__input"
       placeholder="Start typing for search..."
       @change="getListOfCities"
     />
     <button
       v-if="cityName.length"
-      class="city-selector--button"
+      class="city-selector__button"
       @click="getListOfCities"
     >
       Find
     </button>  
     <template v-if="isListOpened">
-      <div class="city-selector--list city-list">
+      <div class="city-selector__list city-list">
         <div
           v-for="c in cities"
-          class="city-list--item"
+          class="city-list__item"
           :key="c.id"
           @click="selectCity(c)"
         >
@@ -82,7 +82,7 @@
       text-align: center;
     }
 
-    &--input {
+    &__input {
       width: 100%;
       padding: 10px;
       border: none;
@@ -102,7 +102,7 @@
       }
     }
 
-    &--button {
+    &__button {
       position: absolute;
       top: 0;
       left: 100%;
@@ -115,7 +115,7 @@
       color: blueviolet;
     }
 
-    &--list {
+    &__list {
       width: 100%;
       position: absolute;
       left: 0;
@@ -130,7 +130,7 @@
     overflow: scroll;
     background-color: blueviolet;
 
-    &--item {
+    &__item {
       padding: 5px;
       line-height: 20px;
       

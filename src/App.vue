@@ -15,9 +15,9 @@
 </template>
 
 <script setup>
-  import CitySelector from '@/components/CitySelector.vue'
-  import UnitSelector from '@/components/UnitSelector.vue'
-  import WeatherWidget from '@/components/WeatherWidget.vue'
+  import CitySelector from '@/components/CitySelector'
+  import UnitSelector from '@/components/UnitSelector'
+  import WeatherWidget from '@/components/WeatherWidget'
   import { getWeatherByCityId } from '@/api'
   import { ref, watch } from 'vue'
   import { WeatherUnits } from '@/utils/constants'
