@@ -1,11 +1,14 @@
 <template>
-<!-- TODO: hide city list after click outside -->
-  <div class="city-selector">
+  <div 
+    v-click-outside="closeList"
+    class="city-selector"
+  >
     <!-- TODO: add debounce -->
     <input 
       v-model="cityName"
       class="city-selector__input"
       placeholder="Start typing for search..."
+      @focus="openList"
       @change="getListOfCities"
     />
     <button
@@ -31,7 +34,7 @@
 </template>
 
 <script setup>
-  import { ref, computed, watch } from 'vue'
+  import { ref } from 'vue'
   import { getCities } from '@/api'
 
   const emit = defineEmits(['select-city'])
@@ -39,8 +42,7 @@
   const cityName = ref('')
   const city = ref(null) 
   const cities = ref([])
-
-  const isListOpened = computed(() => Boolean(cities.value.length))
+  const isListOpened = ref(false)
 
   const getListOfCities = async () => {
     if (!cityName.value) {
@@ -62,8 +64,17 @@
     city.value = selected
     cityName.value = selected.name
     cities.value = []
+    closeList()
 
     emit('select-city', selected.id)
+  }
+
+  const closeList = () => {
+    isListOpened.value = false
+  }
+
+  const openList = () => {
+    isListOpened.value = true
   }
   
 </script>
