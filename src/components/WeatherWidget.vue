@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-  import { WeatherUnits } from '@/utils/constants'
+  import { isPossibleUnit } from '@/helpers'
 
   defineProps({
     weather: {
@@ -48,12 +48,7 @@
     unit: {
       type: String,
       required: true,
-      validator(val) {
-        return [
-          WeatherUnits.METRIC,
-          WeatherUnits.IMPERIAL
-        ].includes(val)
-      }
+      validator: (val) => isPossibleUnit(val)
     }
   })
 </script>
