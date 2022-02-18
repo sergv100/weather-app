@@ -1,35 +1,48 @@
 <template>
-  <div v-if="!weather" class="weather-widget weather-widget_empty">
-    No one city is selected
-  </div>
-  <div 
-    v-else
-    :class="`weather-widget_${unit}`"
-    class="weather-widget widget"
-  >
-    <!-- TODO: convert main part of widget to a component -->
-    <div class="widget--main">
-      <span class="weather-widget--temp">{{ weather.temp }}</span>
-      <img 
-        :src="weather.icon" 
-        :alt="weather.shortDesc"
-        class="weather-widget--icon"
-      >
-      <span>{{ weather.fullDesc }}</span>
+  <div class="widget">
+    <div 
+      v-if="!weather"
+      class="widget__empty"
+    >
+      No one city is selected
     </div>
-    <!-- TODO: convert footer part of widget to a component -->
-    <div class="widget--footer">
-      <div class="weather-widget--pressure widget-footer-item">
-        <span class="widget-footer-item--label">pressure:</span>
-        <span>{{ weather.pressure }}</span>
+    <div v-else>
+      <div class="widget__main">
+        <span 
+          :class="`weather-temp_${unit}`"
+          class="weather-temp"
+        >
+          {{ weather.temp }}
+        </span>
+        <img 
+          :src="weather.icon" 
+          :alt="weather.shortDesc"
+          class="weather-icon"
+        >
+        <span>{{ weather.fullDesc }}</span>
       </div>
-      <div class="weather-widget--humidity widget-footer-item">
-        <span class="widget-footer-item--label">humidity:</span>
-        <span>{{ weather.humidity }}</span>
-      </div>
-      <div class="weather-widget--wind widget-footer-item">
-        <span class="widget-footer-item--label">wind&nbsp;speed:</span>
-        <span>{{ weather.wind.speed }}</span>
+      <div class="widget__footer">
+        <div class="footer-list">
+          <div class="footer-list__item list-item">
+            <span class="list-item__label">pressure:</span>
+            <span class="list-item__text weather-pressure">{{ weather.pressure }}</span>
+          </div>
+          <div class="footer-list__divider"></div>
+          <div class="footer-list__item list-item">
+            <span class="list-item__label">humidity:</span>
+            <span class="list-item__text weather-humidity">{{ weather.humidity }}</span>
+          </div>
+          <div class="footer-list__divider"></div>
+          <div class="footer-list__item list-item">
+            <span class="list-item__label">wind&nbsp;speed:</span>
+            <span
+              :class="`weather-wind_${unit}`"
+              class="list-item__text weather-wind"
+            >
+              {{ weather.wind.speed }}
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -54,111 +67,107 @@
 </script>
 
 <style lang="scss" scoped>
-  .widget--main {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .widget--footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-direction: row;
-    padding-top: 30px;
-
-    & > div {
-      flex: 1 1 auto;
-      text-align: center;
-    }
-  }
-
-  .weather-widget {
+  .widget {
     color: #fff;
-    padding-top: 40px;
+    margin-top: 40px;
     width: 100%;
 
-    &_empty {
+    &__empty {
       text-align: center;
     }
-    
-    &--temp {
+
+    &__main {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    &__footer {
+      margin-top: 30px;
+    }
+  }
+
+  .footer-list {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+
+    &__item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__divider {
+      min-height: 100%;
+      width: 1px;
+      background-color: #fff;
+    }
+  }
+
+  .weather {
+    &-temp {
       font-size: 4rem;
+
       &::after {
         font-size: 3rem;
         color: inherit;
       }
+
+      &_metric {
+
+        &::after {
+          content: '\2103';
+        }
+      }
+
+      &_imperial {
+
+        &::after {
+          content: '\2109';
+        }
+      }
     }
 
-    &--humidity {
+    &-humidity {
       &::after {
         content: '%';
         padding-left: 5px;
       }
     }
 
-    &--pressure {
+    &-pressure {
       &::after {
         content: 'hPa';
         padding-left: 5px;
       }
     }
 
-    &--wind {
+    &-wind {
+
       &::after {
         padding-left: 5px;
       }
-    }
 
-    &--icon {
-      width: 128px;
-    }
-
-    &_metric {
-      .weather-widget--temp {
-  
-        &::after {
-          content: '\2103';
-        }
-      }
-      
-      .weather-widget--wind {
+      &_metric {
 
         &::after {
           content: 'm/s'
         }
       }
-    }
 
-    &_imperial {
-      .weather-widget--temp {
-  
-        &::after {
-          content: '\2109';
-        }
-      }
+      &_imperial {
 
-      .weather-widget--wind {
-        
         &::after {
-          content: 'm/h'
+          content: 'm/h';
         }
       }
     }
-  }
 
-  .widget-footer-item {
-    font-size: 1.2rem;
-
-    & + & {
-      border-left: 1px solid #fff;
-    }
-
-    &--label {
-      display: block;
-      font-size: 1rem;
-      padding-bottom: 10px;
+    &-icon {
+      width: 128px;
     }
   }
+
 </style>
