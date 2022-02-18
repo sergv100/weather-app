@@ -1,27 +1,25 @@
 <template>
   <div class="unit-selector">
-    <button
-      :value="WeatherUnits.METRIC"
-      :class="{ 'unit_selected' : isMetric }"
-      class="unit-selector--item unit unit--metric" 
-      @click="select"
+    <template 
+      v-for="(btn, i) in buttons"
+      :key="`${btn.value}-${i}`"
     >
-      metric
-    </button>
-    <button
-      :value="WeatherUnits.IMPERIAL"
-      :class="{ 'unit_selected' : !isMetric }"
-      class="unit-selector--item unit unit--imperial"
-      @click="select"
-    >
-      imperial
-    </button>
+      <button
+        :value="btn.value"
+        :class="{ 'unit-selector__item_selected' : isSelectedUnit(btn.value) }"
+        class="unit-selector__item"
+        @click="select"
+      >
+        {{ btn.title }}
+      </button>
+    </template>
   </div>
 </template>
 
 <script setup>
-  import { computed } from 'vue'
   import { WeatherUnits } from '@/utils/constants'
+  import { isPossibleUnit } from '@/helpers'
+  import { reactive } from 'vue'
 
   const emit = defineEmits(['select-unit'])
   
@@ -29,43 +27,38 @@
     selectedUnit: {
       type: String,
       required: true,
-      validator(val) {
-        return [
-          WeatherUnits.METRIC,
-          WeatherUnits.IMPERIAL
-        ].includes(val)
-      }
+      validator: (val) => isPossibleUnit(val)
     }
   })
 
-  const isMetric = computed(() => props.selectedUnit === WeatherUnits.METRIC)
+  const buttons = reactive([
+    { value: WeatherUnits.METRIC, title: 'metric' },
+    { value: WeatherUnits.IMPERIAL, title: 'imperial' },
+  ])
+
+  const isSelectedUnit = (cur) => cur === props.selectedUnit
 
   const select = (e) => emit('select-unit', e.target.value)
 </script>
 
 <style lang="scss" scoped>
   .unit-selector {
-    padding-top: 20px;
-  }
-  .unit {
-    border: none;
-    cursor: pointer;
-    color: #fff;
-    background-color: #5d10a5;
-    padding: 5px 10px;
-    min-width: 100px;
+    margin-top: 20px;
+    overflow: hidden;
+    border-radius: 5px;
 
-    &_selected {
-      background-color: aquamarine;
-      color: blueviolet;
-    }
-
-    &--metric {
-      border-radius: 5px 0 0 5px;
-    }
-
-    &--imperial {
-      border-radius: 0 5px 5px 0;
+    &__item {
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      background-color: #5d10a5;
+      padding: 5px 10px;
+      min-width: 100px;
+  
+      &_selected {
+        background-color: aquamarine;
+        color: blueviolet;
+      }
     }
   }
 </style>
