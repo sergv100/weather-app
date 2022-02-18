@@ -41,7 +41,10 @@
   )
 
   const getWeather = async (cityId, unit) => {
-    if (!cityId) return
+    if (!cityId) {
+      weatherData.value = null
+      return
+    }
     try {
       const rawWeather = await getWeatherByCityId(cityId, unit)
       const { main, wind, weather } = rawWeather

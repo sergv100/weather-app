@@ -3,22 +3,14 @@
     v-click-outside="closeList"
     class="city-selector"
   >
-    <!-- TODO: add debounce -->
-    <input 
-      v-model="cityName"
+    <input
+      :value="cityName"
       class="city-selector__input"
       placeholder="Start typing for search..."
       @focus="openList"
-      @change="getListOfCities"
+      @input="debounce"
     />
-    <button
-      v-if="cityName.length"
-      class="city-selector__button"
-      @click="getListOfCities"
-    >
-      Find
-    </button>  
-    <template v-if="isListOpened">
+    <template v-if="isListOpened && cities.length">
       <div class="city-selector__list city-list">
         <div
           v-for="c in cities"
@@ -44,14 +36,22 @@
   const cities = ref([])
   const isListOpened = ref(false)
 
-  const getListOfCities = async () => {
-    if (!cityName.value) {
-      cityName.value = city.value.name
-      cities.value = []
+  const debounce = function (event) {
+    let cooldown
+    clearTimeout(cooldown)
+    cooldown = setTimeout(() => {
+      cityName.value = event.target.value
+      getListOfCities(event.target.value)
+    }, 400)
+  }
+
+  const getListOfCities = async (val) => {
+    if (!val) {
+      selectCity(null)
       return
     }
 
-    const rawCities = await getCities(cityName.value)
+    const rawCities = await getCities(val)
 
     cities.value = rawCities.map(c => ({
       id: c.id,
@@ -61,12 +61,12 @@
   }
 
   const selectCity = (selected) => {
-    city.value = selected
-    cityName.value = selected.name
+    city.value = selected || null
+    cityName.value = selected?.name || ''
     cities.value = []
     closeList()
 
-    emit('select-city', selected.id)
+    emit('select-city', selected?.id)
   }
 
   const closeList = () => {
